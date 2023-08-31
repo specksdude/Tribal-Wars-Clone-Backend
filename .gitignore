@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# VS Code
+.vscode
+!.vscode/tasks.js
+
+# JetBrains IDEs
+.idea/
+
+# Optional npm cache directory
+.npm
+yarn.lock
+
+# Optional eslint cache
+.eslintcache
+
+# Swc cache
+swc/
+.swc/
+
+# Misc
+.DS_Store
+package-lock.json
+
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+yarn-debug.log*
+yarn-error.log*
+/.temp_img/*
+/.temp_audio/*
+/.VSCodeCounter
+
+# Config files
+config/devConfig.json
+config/prodConfig.json
