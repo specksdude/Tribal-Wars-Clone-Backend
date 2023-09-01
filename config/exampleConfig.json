@@ -1,8 +1,8 @@
 {
-  "amqpURI": "rabbitUrl",
-  "redisURI": "redisUrl",
   "corsOrigin": "*",
   "httpPort": 80,
+  "mongoURI": "mongodb://user:password@mongo",
+  "mongoDB": "database",
   "accessToken": "accessToken",
-  "refToken": "refreshToken"
+  "refToken": "refToken"
 }
