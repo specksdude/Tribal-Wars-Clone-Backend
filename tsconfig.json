@@ -39,7 +39,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "build",
-    "rootDir": ".",
+    "rootDir": "./",
     "preserveSymlinks": true,
     "pretty": true,
     "preserveConstEnums": true,
@@ -55,7 +55,8 @@
     "useDefineForClassFields": false
   },
   "include": [
-    "**/*"
+    "**/*",
+    "node_modules/ts-jest/globals.d.ts"
   ]
 }
 

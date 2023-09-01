@@ -1,7 +1,9 @@
 import Controller from './controller';
 import * as enums from '../../../../enums';
+import { IncorrectCredentialsError } from '../../../../errors';
 import handleErr from '../../../../errors/utils';
 import limitRate from '../../../utils';
+import type LoginDto from './dto';
 import type * as types from '../../../../types';
 
 const service = new Controller();
@@ -25,12 +27,12 @@ const service = new Controller();
  *             schema:
  *               $ref: '#/components/schemas/UnauthorizedError'
  */
-service.router.get('/login', limitRate, async (req, res: types.ILocalUser) => {
+service.router.get('/login', limitRate, (req, res: types.ILocalUser) => {
   try {
     service.get(req, res);
     res.send();
   } catch (err) {
-    return handleErr(err as types.IFullError, res);
+    handleErr(err as types.IFullError, res);
   }
 });
 
@@ -75,7 +77,7 @@ service.router.get('/login', limitRate, async (req, res: types.ILocalUser) => {
  */
 service.router.post('/login', limitRate, async (req, res: types.ILocalUser) => {
   try {
-    const { accessToken } = await service.post(req);
+    const { accessToken } = await service.post(req.body as LoginDto);
 
     res.cookie(enums.EJwt.AccessToken, accessToken, {
       httpOnly: true,
@@ -91,9 +93,9 @@ service.router.post('/login', limitRate, async (req, res: types.ILocalUser) => {
     //   sameSite: 'strict',
     //   path: '/refresh',
     // });
-    return res.send();
+    res.send();
   } catch (err) {
-    return handleErr(err as types.IFullError, res);
+    handleErr(new IncorrectCredentialsError(), res);
   }
 });
 

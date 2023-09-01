@@ -6,6 +6,7 @@ import ControllerFactory from '../../../../tools/abstracts/controller';
 import * as utils from '../../../../tools/token';
 import Rooster from '../rooster';
 import Utils from '../utils';
+import type { ILoginDto } from './types';
 import type { EModules } from '../../../../tools/abstracts/enums';
 import type { ILocalUser } from '../../../../types';
 import type express from 'express';
@@ -37,12 +38,12 @@ export default class Controller extends ControllerFactory<EModules.Users> {
     return { type, id };
   }
 
-  async post(req: express.Request): Promise<{
+  async post(data: ILoginDto): Promise<{
     accessToken: string;
     refreshToken: string;
     userId: string;
   }> {
-    const payload = new LoginDto(req.body as LoginDto);
+    const payload = new LoginDto(data);
 
     const { login, password } = payload;
     const user = await this.rooster.getByLogin(login);

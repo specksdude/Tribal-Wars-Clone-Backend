@@ -5,6 +5,16 @@ import State from './tools/state';
 import type { IFullError } from './types';
 
 class App {
+  private readonly _mongo: Mongo;
+
+  private get mongo(): Mongo {
+    return this._mongo;
+  }
+
+  constructor() {
+    this._mongo = new Mongo();
+  }
+
   init(): void {
     this.handleInit().catch((err) => {
       const { stack, message } = err as IFullError;
@@ -17,6 +27,7 @@ class App {
 
   kill(): void {
     State.router.close();
+    this.mongo.disconnect().catch(() => Log.error('Server', 'Mongo was not able to close itself'));
     Log.log('Server', 'Server closed');
   }
 
@@ -24,8 +35,7 @@ class App {
     State.router = new Router();
     State.router.init();
 
-    const mongo = new Mongo();
-    await mongo.init();
+    await this.mongo.init();
     Log.log('Server', 'Server started');
   }
 }

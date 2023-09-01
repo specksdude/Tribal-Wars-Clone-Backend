@@ -1,3 +1,4 @@
+import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import getConfig from '../configLoader';
 import Log from '../logger/log';
@@ -5,7 +6,7 @@ import type { ConnectOptions } from 'mongoose';
 
 export default class Mongo {
   async init(): Promise<void> {
-    await this.startServer();
+    process.env.NODE_ENV === 'test' ? await this.startMockServer() : await this.startServer();
   }
 
   async disconnect(): Promise<void> {
@@ -19,5 +20,10 @@ export default class Mongo {
       dbName: getConfig().mongoDB,
     } as ConnectOptions);
     Log.log('Mongo', 'Started server');
+  }
+
+  private async startMockServer(): Promise<void> {
+    const server = await MongoMemoryServer.create();
+    await mongoose.connect(server.getUri());
   }
 }

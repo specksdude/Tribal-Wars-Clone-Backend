@@ -1,6 +1,7 @@
 import Controller from './controller';
 import handleErr from '../../../../errors/utils';
 import limitRate from '../../../utils';
+import type RegisterDto from './dto';
 import type * as types from '../../../../types';
 
 const service = new Controller();
@@ -35,10 +36,10 @@ const service = new Controller();
  */
 service.router.post('/register', limitRate, async (req, res: types.ILocalUser) => {
   try {
-    await service.post(req);
+    await service.post(req.body as RegisterDto);
     res.send();
   } catch (err) {
-    return handleErr(err as types.IFullError, res);
+    handleErr(err as types.IFullError, res);
   }
 });
 
