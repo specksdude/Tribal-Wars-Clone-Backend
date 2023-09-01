@@ -33,6 +33,7 @@ package-lock.json
 
 # testing
 /coverage
+/__tests__/coverage
 
 # production
 /build
